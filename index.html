@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> Where every petal tells a story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cotton:#E38792;
+  --garnet:#4E0A0B;
+  --dusty:#F2EEE8;
+  --khaki:#9DAD71;
+  --white:#fffdf9;
+  --ink:#2b1a1a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:var(--white);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;letter-spacing:-0.02em}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+img{display:block;max-width:100%}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+.rounded-2xl{border-radius:1.25rem}
+.shadow-soft{box-shadow:0 10px 30px rgba(78,10,11,0.07),0 2px 8px rgba(78,10,11,0.04)}
+.admin-banner{display:none;background:var(--khaki);color:#fff;text-align:center;padding:8px 14px;font-size:13px;font-weight:600;letter-spacing:.04em;position:sticky;top:0;z-index:100}
+.admin-banner.on{display:block}
+/* header */
+header{position:sticky;top:0;z-index:90;background:rgba(253,253,249,.86);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid rgba(78,10,11,.06)}
+header .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo-wrap img{width:54px;height:54px;object-fit:contain;border-radius:50%;background:var(--dusty)}
+.brand-name{font-size:28px;font-weight:700;line-height:1}
+.brand-name .fiora{color:var(--garnet)}
+.brand-name .dot{font-size:14px;color:var(--cotton);display:block;font-family:'Poppins';font-weight:500;letter-spacing:.08em;margin-top:2px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:14px;font-weight:500;opacity:.85;position:relative}
+.nav-links a:hover{opacity:1}
+.nav-links a:after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:1.5px;background:var(--cotton);transition:.25s}
+.nav-links a:hover:after{width:100%}
+.actions{display:flex;gap:10px;align-items:center}
+.icon-btn{width:40px;height:40px;border-radius:999px;border:1px solid rgba(78,10,11,.12);background:var(--dusty);display:grid;place-items:center}
+.admin-toggle{display:flex;align-items:center;gap:8px;background:var(--dusty);border-radius:999px;padding:6px 12px;border:1px solid rgba(78,10,11,.08);font-size:12px;font-weight:600}
+.switch{width:36px;height:22px;background:#d8d0c8;border-radius:999px;position:relative;transition:.2s;cursor:pointer}
+.switch i{position:absolute;top:2px;left:2px;width:18px;height:18px;background:white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:.2s}
+.switch.on{background:var(--khaki)}
+.switch.on i{transform:translateX(14px)}
+.hamburger{display:none}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hamburger{display:grid}
+  .nav-links.mobile-open{display:flex;position:absolute;top:74px;left:0;right:0;background:var(--white);flex-direction:column;padding:18px 20px;border-bottom:1px solid rgba(0,0,0,.08);box-shadow:0 12px 24px rgba(0,0,0,.08)}
+}
+/* hero */
+.hero{background:var(--dusty);position:relative;overflow:hidden}
+.hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;padding:64px 0 56px;align-items:center}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;padding:36px 0 24px}}
+.hero h1{font-size:clamp(36px,5.2vw,66px);line-height:.95;font-weight:700;color:var(--garnet);max-width:600px}
+.hero h1 span{color:var(--cotton);font-style:italic;font-weight:500}
+.hero-sub{margin-top:16px;font-size:16px;opacity:.7;max-width:420px}
+.ctas{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{padding:14px 22px;border-radius:999px;font-weight:600;font-size:14px;border:1px solid transparent;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--garnet);color:var(--dusty)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(78,10,11,.2)}
+.btn-ghost{background:white;border-color:rgba(78,10,11,.12)}
+.hero-visual{position:relative;display:grid;place-items:center}
+.logo-hero{width:92%;max-width:460px;filter:drop-shadow(0 20px 40px rgba(78,10,11,.12));animation:float 6s ease-in-out infinite}
+.sticker{position:absolute;font-size:22px;background:white;border-radius:999px;padding:8px 12px;box-shadow:0 8px 24px rgba(0,0,0,.12);border:1px solid rgba(0,0,0,.06)}
+.sticker.s1{top:8%;right:12%;animation:float 5s ease-in-out infinite}
+.sticker.s2{bottom:18%;left:6%;animation:float 7s ease-in-out infinite reverse}
+.sticker.s3{bottom:6%;right:18%;animation:float 6.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+/* marquee */
+.marquee{background:var(--garnet);color:var(--dusty);overflow:hidden;white-space:nowrap;padding:12px 0;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.marquee-track{display:inline-flex;animation:marq 28s linear infinite}
+.marquee-track span{margin:0 28px;display:flex;align-items:center;gap:28px}
+.marquee-track span:after{content:'✦'}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* sections */
+section{padding:72px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.section-head h2{font-size:clamp(28px,4vw,44px);color:var(--garnet)}
+.section-head p{opacity:.6;max-width:420px;font-size:14px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:8px 14px;border-radius:999px;border:1px solid rgba(78,10,11,.12);background:white;font-size:13px;font-weight:500;cursor:pointer}
+.chip.active{background:var(--garnet);color:var(--dusty);border-color:var(--garnet)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+.card{background:var(--dusty);border-radius:22px;overflow:hidden;position:relative;border:1px solid rgba(78,10,11,.06);transition:.25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 36px rgba(78,10,11,.12)}
+.card img{aspect-ratio:1/1;object-fit:cover;width:100%;background:#efe7df}
+.card-body{padding:14px 16px 16px}
+.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.badge{font-size:11px;font-weight:700;letter-spacing:.04em;background:var(--khaki);color:white;padding:5px 9px;border-radius:999px}
+.price{font-family:'Cormorant Garamond';font-size:22px;font-weight:700;color:var(--garnet)}
+.card h3{font-size:17px;line-height:1.2;margin:4px 0}
+.meta{font-size:11px;opacity:.55;margin-top:6px;letter-spacing:.02em}
+.card-actions{position:absolute;top:10px;right:10px;display:flex;gap:6px;opacity:0;transition:.2s}
+.card:hover .card-actions{opacity:1}
+.mini-btn{width:32px;height:32px;border-radius:999px;background:white;border:1px solid rgba(0,0,0,.08);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.add-card{border:2px dashed var(--khaki);background:rgba(157,173,113,.12);display:grid;place-items:center;min-height:360px;cursor:pointer}
+.add-card div{text-align:center}
+.add-card span.plus{width:48px;height:48px;background:var(--khaki);color:white;border-radius:50%;display:grid;place-items:center;font-size:28px;margin:0 auto 10px}
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(43,26,26,.42);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:200;display:none;place-items:center;padding:18px}
+.overlay.open{display:grid}
+.modal{background:var(--white);border-radius:24px;max-width:920px;width:100%;overflow:hidden;display:grid;grid-template-columns:1.1fr .9fr;box-shadow:0 30px 80px rgba(0,0,0,.28)}
+@media(max-width:760px){.modal{grid-template-columns:1fr;max-height:92vh;overflow:auto}}
+.modal-img{position:relative;background:var(--dusty)}
+.modal-img img{width:100%;height:100%;object-fit:cover;min-height:380px}
+.modal-body{padding:22px 22px 20px;display:flex;flex-direction:column}
+.close{position:absolute;top:12px;left:12px;background:white;width:36px;height:36px;border-radius:999px;display:grid;place-items:center;border:1px solid rgba(0,0,0,.08)}
+.form-grid{display:grid;gap:12px}
+.input, .textarea, .select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(78,10,11,.14);background:white;font-size:14px}
+.textarea{min-height:92px;resize:vertical}
+.label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.7;margin-bottom:4px;display:block}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--garnet);color:var(--dusty);padding:12px 18px;border-radius:999px;font-size:13px;font-weight:600;z-index:300;box-shadow:0 12px 30px rgba(0,0,0,.22);display:none}
+.toast.show{display:block;animation:toastIn .3s ease}
+@keyframes toastIn{from{transform:translate(-50%,12px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+/* reviews */
+.masonry{column-count:3;column-gap:18px}
+@media(max-width:900px){.masonry{column-count:2}}
+@media(max-width:560px){.masonry{column-count:1}}
+.polaroid{background:white;border-radius:16px;padding:10px 10px 18px;box-shadow:0 8px 24px rgba(0,0,0,.08);break-inside:avoid;margin-bottom:18px;position:relative;border:1px solid rgba(0,0,0,.06);transform:rotate(-.6deg)}
+.polaroid:nth-child(2n){transform:rotate(.8deg)}
+.polaroid img{border-radius:10px;width:100%;aspect-ratio:auto;object-fit:cover}
+.polaroid .tape{position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-6deg);width:78px;height:22px;background:rgba(242,238,232,.9);border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+/* query */
+.query-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:26px}
+@media(max-width:900px){.query-wrap{grid-template-columns:1fr}}
+.query-card{background:white;border-radius:22px;padding:22px;border:1px solid rgba(78,10,11,.08)}
+footer{background:var(--garnet);color:var(--dusty);padding:54px 0 28px;margin-top:24px}
+.footer-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:24px}
+@media(max-width:800px){.footer-grid{grid-template-columns:1fr}}
+.small{font-size:12px;opacity:.7}
+.divider{height:1px;background:rgba(242,238,232,.14);margin:18px 0}
+.editable{outline:1px dashed var(--khaki);outline-offset:4px;border-radius:6px}
+.brand-wordmark{display:flex}
+.brand-wordmark .fiora{color:var(--garnet)}
+.brand-wordmark .ora{color:var(--cotton)}
+.cart-count{font-size:11px;font-weight:700;margin-left:2px}
+.hero-edit-hint{margin-top:8px;opacity:.5}
+.hero-delivery{margin-top:26px;display:flex;gap:10px;align-items:center}
+.hero-thumb{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid white}
+.hero-thumb.overlap{margin-left:-14px}
+.delivery-label{font-size:12px;line-height:1.2;margin-left:6px}
+.muted{opacity:.6}
+.story,.contact{background:var(--dusty)}
+.story-title{font-size:42px;color:var(--garnet)}
+.story-intro{margin-top:12px}
+.story-copy{margin-top:10px;opacity:.7}
+.story-chips{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+.white-chip{background:white}
+.story-images{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.story-image{border-radius:18px;aspect-ratio:.9/1;object-fit:cover;margin-top:22px}
+.hidden{display:none}
+.query-subtitle{margin-bottom:16px}
+.query-title{font-size:28px;color:var(--garnet)}
+.talk-title{font-size:24px}
+.talk-subtitle{margin:8px 0 16px}
+.full-width{width:100%;justify-content:center}
+.info-box{margin-top:18px;padding:12px;background:var(--dusty);border-radius:14px;font-size:13px}
+.admin-panel{display:none;margin-top:18px}
+.admin-panel-list{display:grid;gap:8px;max-height:260px;overflow:auto;margin-top:8px}
+.admin-quotes{display:none;margin-top:14px}
+.field-spaced{margin-top:8px}
+.save-quotes{margin-top:10px}
+.footer-brand{display:flex;align-items:center;gap:10px}
+.footer-logo{width:48px;height:48px;border-radius:50%;background:white}
+.footer-name{font-size:28px}
+.footer-description{margin-top:10px;opacity:.8}
+.footer-heading{color:var(--dusty);opacity:1}
+.footer-links{display:grid;gap:6px;margin-top:8px}
+.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.modal-title{font-size:32px;color:var(--garnet);margin-top:10px}
+.modal-price{margin-top:6px}
+.modal-description{margin-top:12px;opacity:.75;font-size:14px}
+.modal-note{margin-top:14px;font-size:12px;opacity:.5}
+.modal-actions{margin-top:auto;display:grid;gap:8px;padding-top:18px}
+.modal-single{max-width:560px;grid-template-columns:1fr}
+.modal-review{max-width:420px;grid-template-columns:1fr}
+.modal-pin{max-width:360px;grid-template-columns:1fr}
+.modal-cart{max-width:380px;height:100vh;border-radius:0;grid-template-columns:1fr}
+.modal-header{display:flex;justify-content:space-between;align-items:center}
+.modal-header.simple{align-items:initial}
+.modal-header .close{position:static}
+.modal-heading{font-size:26px}
+.form-spaced{margin-top:14px}
+.preview{width:100%;height:200px;object-fit:cover;border-radius:12px;margin-top:8px;display:none}
+.two-columns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-error{color:#b4232a;font-size:12px;display:none}
+.review-form{margin-top:12px}
+.pin-heading{font-size:22px}
+.pin-help{margin-top:6px}
+.pin-input{margin-top:14px}
+.pin-submit{margin-top:12px;width:100%}
+.pin-error{color:#b4232a;font-size:12px;margin-top:8px;display:none}
+.cart-items{margin-top:14px;display:grid;gap:10px}
+.cart-overlay{justify-content:end}
+.cart-summary{margin-top:auto;padding-top:16px;border-top:1px solid rgba(0,0,0,.08)}
+.cart-total{display:flex;justify-content:space-between}
+.cart-checkout{width:100%;margin-top:10px;justify-content:center}
+.add-card-note{margin-top:4px}
+.card-actions.admin-visible{opacity:1}
+.review-meta{margin-top:8px;display:flex;justify-content:space-between;align-items:center}
+.review-name{font-size:13px}
+.review-delete{width:24px;height:24px;font-size:12px}
+.query-item{background:var(--dusty);padding:10px;border-radius:10px;font-size:12px}
+.query-date{opacity:.5}
+.cart-item{display:flex;gap:10px;align-items:center;background:var(--dusty);padding:8px;border-radius:12px}
+.cart-item-image{width:48px;height:48px;border-radius:8px;object-fit:cover}
+.cart-item-details{flex:1}
+.cart-item-name{font-size:13px;font-weight:600}
+.cart-item-price{font-size:11px;opacity:.6}
+</style>
+</head>
+<body>
+<div id="adminBanner" class="admin-banner">You are in Admin Mode</div>
+
+<header>
+  <div class="container nav">
+    <div class="logo-wrap">
+      <img src="logo.png" alt="Fiora logo" />
+      <div class="brand-name">
+        <div class="serif brand-wordmark"><span class="fiora">Fi</span><span class="ora">ora</span></div>
+        <span class="dot">Where every petal tells a story</span>
+      </div>
+    </div>
+    <nav id="navLinks" class="nav-links">
+      <a href="#shop">Shop</a>
+      <a href="#story">Our Story</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="actions">
+      <div class="admin-toggle" title="Admin Mode - PIN ">
+        <span class="hide-m hidden">Admin</span>
+        <div id="adminSwitch" class="switch"><i></i></div>
+      </div>
+      <button class="icon-btn" id="cartBtn">🛒<span id="cartCount" class="cart-count">0</span></button>
+      <button class="icon-btn hamburger" id="hamburger">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="marquee"><div id="marqueeTrack" class="marquee-track"></div></div>
+
+<section class="hero" id="top">
+  <div class="container hero-inner">
+    <div>
+      <h1 id="heroTitle" class="serif">Fresh blooms, hand-tied with love.</h1>
+      <p id="heroSub" class="hero-sub">Small batch bouquets from our studio in Kanpur — chenille, forever flowers that never wilt.</p>
+      <p class="small hero-edit-hint" id="heroEditHint"></p>
+      <div class="ctas">
+        <a href="#shop" class="btn btn-primary">Shop Now →</a>
+      </div>
+      <div class="hero-delivery">
+        <img src="Dancing Sunflower.jpg" class="hero-thumb" alt="Dancing sunflower bouquet"/>
+        <img src="jewellery holder large.jpeg" class="hero-thumb overlap" alt="Large jewellery holder"/>
+        <img src="Royal Blue Evil Eye Flower.jpg" class="hero-thumb overlap" alt="Pink and green tulip lamp"/>
+        <div class="delivery-label"><b>Delivery only</b><br><span class="muted">in Kanpur</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="logo-large.png" class="logo-hero" alt="Fiora wreath"/>
+      <div class="sticker s1">🌻</div>
+      <div class="sticker s2">💐</div>
+    </div>
+  </div>
+</section>
+
+<section id="shop">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2 class="serif">Forever bouquets</h2>
+        <p>Fixed price — no bargaining. Handmade with chenille stems. Delivery time mentioned on every card.</p>
+      </div>
+      <div class="filters" id="filters"></div>
+    </div>
+    <div id="shopGrid" class="grid"></div>
+  </div>
+</section>
+
+<section id="story" class="story">
+  <div class="container">
+    <div class="query-wrap">
+      <div>
+        <h2 class="serif story-title">We are Fiora</h2>
+        <p class="story-intro">Hi, I'm a 20 year old from Kanpur who fell in love with flowers that don't die. Fiora started in my bedroom with a pack of pipe cleaners at 2am. We also do customised arrangements for special occasions.</p>
+        <p class="story-copy">Every bouquet is hand-twisted petal by petal. We make small batches so your bouquet isn't a copy. Whether it's a birthday, an apology, or a just-because day — we tie it like it's for our own best friend.</p>
+        <div class="story-chips">
+          <span class="chip white-chip">🌿 no returns</span>
+          <span class="chip white-chip">🎁 customised arrangements</span>
+          <span class="chip white-chip">🚚 delivery only in Kanpur</span>
+        </div>
+      </div>
+      <div class="story-images">
+        <img src="giant rose.jpeg" class="story-image" alt="Handmade giant rose"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="serif">Love notes from our Bloom fam</h2>
+      <button id="addReviewBtn" class="btn btn-ghost hidden">+ Add Review Screenshot</button>
+    </div>
+    <div id="reviewsMasonry" class="masonry"></div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="query-wrap">
+      <div class="query-card shadow-soft">
+        <h3 class="serif query-title">Send a query</h3>
+        <p class="small query-subtitle">Tell us the occasion — we’ll suggest the perfect bouquet.</p>
+        <form id="queryForm" class="form-grid">
+          <div><label class="label">Name</label><input class="input" name="name" required placeholder="Your name" /></div>
+          <div><label class="label">WhatsApp Number</label><input class="input" name="whatsapp" required placeholder="+91 ..." /></div>
+          <div><label class="label" for="occasion">Occasion</label><select id="occasion" class="select" name="occasion" aria-label="Occasion"><option>Birthday</option><option>Anniversary</option><option>Apology</option><option>Something Special</option><option>For Him</option></select></div>
+          <div><label class="label">Message</label><textarea class="textarea" name="message" placeholder="What are you looking for?"></textarea></div>
+          <button class="btn btn-primary" type="submit">Send Query →</button>
+        </form>
+      </div>
+      <div>
+        <div class="query-card">
+          <h3 class="serif talk-title">Talk directly</h3>
+          <p class="small talk-subtitle">Fastest response on WhatsApp. We will reply as soon as possible (10am–10pm).</p>
+          <a id="waLink" class="btn btn-primary full-width" target="_blank">WhatsApp us</a>
+          <div class="info-box">
+            <b>Fixed price — no bargaining</b><br><span class="muted">We keep prices transparent so every bloom fam pays the same. Delivery charges are not included in it.</span>
+          </div>
+          <div id="adminQueries" class="admin-panel">
+            <h4 class="label">Customer Queries (admin only)</h4>
+            <div id="queriesList" class="admin-panel-list"></div>
+          </div>
+        </div>
+        <div id="adminQuotes" class="query-card admin-quotes">
+          <h4 class="label">Edit rotating quotes & hero</h4>
+          <label class="label">Hero quote</label><input id="editHeroTitle" class="input" />
+          <label class="label field-spaced">Hero subtext</label><input id="editHeroSub" class="input" />
+          <label class="label field-spaced">Ribbon quotes (comma separated)</label><textarea id="editQuotes" class="textarea"></textarea>
+          <button id="saveQuotesBtn" class="btn btn-primary save-quotes">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="logo.png" class="footer-logo" alt="Fiora logo"/><span class="serif footer-name">Fiora</span></div>
+        <p class="footer-description">Where every petal tells a story. Handmade forever flowers from Kanpur.</p>
+      </div>
+      <div>
+        <div class="label footer-heading">Shop</div>
+        <div class="small footer-links"><a href="#shop">All bouquets</a></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="footer-bottom"><span class="small">© <span id="year"></span> Fiora</span><span class="small">Fixed Price • No Bargaining • Handmade with love</span></div>
+  </div>
+</footer>
+
+<!-- Modals -->
+<div id="productModal" class="overlay"><div class="modal">
+  <div class="modal-img"><button class="close" data-close="productModal">✕</button><img id="mImg" src="" alt="" /></div>
+  <div class="modal-body">
+    <span id="mBadge" class="badge"></span>
+    <h2 id="mName" class="serif modal-title"></h2>
+    <div id="mPrice" class="price modal-price"></div>
+    <p id="mDesc" class="modal-description"></p>
+    <p class="modal-note">Fixed Price - No Bargaining • Handmade • Delivery time above is final</p>
+    <div class="modal-actions">
+      <a id="mWa" target="_blank" class="btn btn-primary full-width">Order on WhatsApp →</a>
+      <button id="mCart" class="btn btn-ghost full-width">Add to cart</button>
+    </div>
+  </div>
+</div></div>
+
+<div id="editModal" class="overlay"><div class="modal modal-single"><div class="modal-body">
+  <div class="modal-header"><h3 class="serif modal-heading">Bouquet details</h3><button class="close" data-close="editModal">✕</button></div>
+  <div class="form-grid form-spaced">
+    <div><label class="label" for="fImg">Image (upload)</label><input id="fImg" type="file" accept="image/*" class="input"/><img id="fPreview" class="preview" alt="Selected bouquet preview"/></div>
+    <div><label class="label">Bouquet Name *</label><input id="fName" class="input" required /></div>
+    <div class="two-columns">
+      <div><label class="label">Price (INR) *</label><input id="fPrice" type="number" class="input" min="1" required /></div>
+      <div><label class="label">Delivery Time * (mandatory)</label><input id="fDelivery" class="input" placeholder="e.g. Same day / 2-3 hours" required /></div>
+    </div>
+    <div><label class="label">Category</label><select id="fCategory" class="select"><option>Roses</option><option>Sunflowers</option><option>Lilies</option><option>Lotus</option><option>Tulips</option><option>Others</option></select></div>
+    <div><label class="label">Description (fixed)</label><textarea id="fDesc" class="textarea" readonly></textarea></div>
+    <button id="saveProduct" class="btn btn-primary">Save bouquet</button>
+    <p id="formError" class="form-error"></p>
+  </div>
+</div></div></div>
+
+<div id="reviewModal" class="overlay"><div class="modal modal-review"><div class="modal-body">
+  <div class="modal-header simple"><h3 class="serif">Add review screenshot</h3><button class="close" data-close="reviewModal">✕</button></div>
+  <div class="form-grid review-form">
+    <input id="rImg" type="file" accept="image/*" class="input" />
+    <input id="rName" class="input" placeholder="Customer name (optional)" />
+    <button id="saveReview" class="btn btn-primary">Save review</button>
+  </div>
+</div></div></div>
+
+<div id="pinModal" class="overlay"><div class="modal modal-pin"><div class="modal-body">
+  <h3 class="serif pin-heading">Enter Admin PIN</h3><p class="small pin-help"></p>
+  <input id="pinInput" type="password" class="input pin-input" placeholder="••••" />
+  <button id="pinSubmit" class="btn btn-primary pin-submit">Unlock</button>
+  <p id="pinError" class="pin-error">Wrong PIN</p>
+</div></div></div>
+
+<div id="cartDrawer" class="overlay cart-overlay"><div class="modal modal-cart"><div class="modal-body">
+  <div class="modal-header simple"><h3 class="serif">Your cart</h3><button class="close" data-close="cartDrawer">✕</button></div>
+  <div id="cartItems" class="cart-items"></div>
+  <div class="cart-summary">
+    <div class="cart-total"><span>Total</span><b id="cartTotal">Rs. 0</b></div>
+    <a id="cartWa" target="_blank" class="btn btn-primary cart-checkout">Checkout on WhatsApp</a>
+  </div>
+</div></div></div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const LS = {
+  products: 'fiora_products_v2',
+  reviews: 'fiora_reviews_v2',
+  quotes: 'fiora_quotes',
+  hero: 'fiora_hero',
+  queries: 'fiora_queries',
+  admin: 'fiora_admin_on'
+};
+const WHATSAPP_NUMBER = '917839007119'; // replace with yours
+const defaultQuotes = ["No two bouquets are the same","For birthdays, apologies, and just-because days.","Made to last, not to wilt","Small batch from Kanpur","Fixed price — no bargaining","Hand-twisted petal by petal"];
+const defaultHero = {title:"Fresh blooms, hand-tied with love.", sub:"Small batch bouquets from our studio in Kanpur — chenille, forever flowers that never wilt."};
+const defaultProducts = [
+  {id:1,name:"Stacked Ombré Hearts Keychains",price:179,delivery:"Delivers in 10 days",category:"Others",img:"Stacked Ombré Hearts Keychains.jpg",desc:"Mini plush keychains featuring three layered chevron hearts in gradient pink and blue colorways. A sweet, lightweight accessory to clip onto keys, backpacks, or tote bags for a pop of pastel charm."},
+  {id:2,name:"Coquette Floral & Bow Charm Collection",price:699,delivery:"Delivers in 12 days",category:"Others",img:"Coquette Floral & Bow Charm Collection.jpg",desc:"A set of soft pink and white velvet lily charms and a matching pink ribbon bow, accented with pearl details. Delivers an elegant, dreamy aesthetic for personalizing your favorite bags and accessories."},
+  {id:3,name:"Dreamy Crescent Moon & Cloud Lamp",price:1199,delivery:"Delivers in 20 days",category:"Others",img:"Moon & Cloud.jpg",desc:"A whimsical nightlight displaying a bright yellow crescent moon, fluffy clouds, and hanging glowing stars set on a natural wood slice. Casts a cozy, magical light perfect for creating a relaxing atmosphere in any bedroom."},
+  {id:4,name:"Soft Lilac Bloom Jewelry Bowl",price:799,delivery:"Delivers in 15 days",category:"Others",img:"jewellery holder large.jpeg",desc:"A pair of flower-shaped plush catchall dishes in soft pink and deep red to hold your daily jewelry or lipsticks. Keeps your vanity clutter-free while serving as a charming aesthetic decor piece."},
+  {id:5,name:"Lavender Bouquet",price:699,delivery:"Delivers in 20 days",category:"Lilies",img:"Lavender Stem Flower Bouquet.jpg",desc:"A handcrafted bundle of plush purple lavender stems and soft lilies wrapped in color-coordinated paper and ribbon. Delivers all the soothing vibes of a real lavender field in a bouquet that lasts forever."},
+  {id:6,name:"Giant Sunflower",price:1799,delivery:"Delivers in 25 days",category:"Sunflowers",img:"Giant Sunflower.jpg",desc:"A statement-making oversized velvet sunflower stem crafted with layered petals. An unforgettable grand gift or bold decor centerpiece that commands attention."},
+  {id:7,name:"Plush Berry Charm Keyring",price:159,delivery:"Delivers in 10 days",category:"Others",img:"Strawberry keychain.jpg",desc:"A 3D plush red strawberry keychain detailed with a green leaf top and pearl. A cute, fruity accent designed to bring a playful burst of color to your keys or bag setup."},
+  {id:8,name:"Smiley Pot Planter Duo",price:799,delivery:"Delivers in 20 days",category:"Others",img:"mini pots duo.jpg",desc:"A pair of adorable mini planters featuring rosy-cheeked smiling faces—one filled with green cacti and the other with colorful pastel tulips. Brings double the joy and personality to your desk, windowsill, or nightstand."},
+  {id:9,name:"Pink-White Tulip Desk Lamp",price:1799,delivery:"Delivers in 25 days",category:"Tulips",img:"light pink tulip lamp.jpeg",desc:"A pair of vibrant pink lotus blossoms designed to cradle LED tea lights for a warm glow. Adds a soothing, ambient touch to your bedside table, vanity, or cozy corner."},
+  {id:10,name:"Luminous White Lotus Nightstand Lamp",price:1999,delivery:"Delivers in 25 days",category:"Lotus",img:"white lotus lamp.jpeg",desc:"A handcrafted desk lamp featuring a glowing white blossom intertwined with fairy lights. Functions as both a functional nightlight and a whimsical piece of art for your room."},
+  {id:11,name:"Spider-Hero Themed Bouquet",price:799,delivery:"Delivers in 15 days",category:"Others",img:"Limpiapipas Spiderman.jpg",desc:"A fun, character-inspired bouquet featuring a Spider-Man mask rose bud, a blue-and-red lily, and a plush spiderweb accent. The perfect unique keepsake gift for Marvel fans, pop culture lovers, or themed celebrations."},
+  {id:12,name:"Velvet Heart Bloom Bouquet",price:649,delivery:"Delivers in 18 days",category:"Others",img:"Hearts bouquet.jpg",desc:"A dramatic arrangement of velvet red heart-shaped stems wrapped in crisp white paper with sheer tulle and a satin bow. The ultimate romantic gesture that turns simple heart motifs into an everlasting declaration of love."},
+  {id:13,name:"Royal Blue Evil Eye Flower",price:359,delivery:"Delivers in 15 days",category:"Others",img:"Royal Blue Evil Eye Flower.jpg",desc:"A bold, single-stem dark blue flower featuring an iconic evil eye design at its center, wrapped in Kraft paper with a matching satin ribbon. Combines striking visual aesthetic with protective, positive energy for your space or recipient."},
+  {id:14,name:"Mini Trinket & Makeup Flower Dish Set",price:1199,delivery:"Delivers in 20 days",category:"Lilies",img:"jewellery holder mini.jpeg",desc:"A pair of flower-shaped plush catchall dishes in soft pink and deep red to hold your daily jewelry or lipsticks. Keeps your vanity clutter-free while serving as a charming aesthetic decor piece."},
+  {id:15,name:"Crimson & Cream Lily Bouquet",price:1149,delivery:"Delivers in 20 days",category:"Lilies",img:"red white lily bouquet.jpeg",desc:"A bold, elegant mix of deep red and soft cream lilies accented with dainty white daisies. Delivers a dramatic, romantic aesthetic wrapped neatly with a silky gold ribbon."},
+  {id:16,name:"Sunflower Pot",price:349,delivery:"Delivers in 15 days",category:"Sunflowers",img:"Sun Pot.jpg",desc:"A handcrafted mini sunflower in a cozy plush pot, sized to fit right in the palm of your hand. It’s an insanely cute, zero-maintenance pocket of sunshine made to brighten up any desk or shelf."},
+  {id:17,name:"Mini Sunflower Bag Charm",price:179,delivery:"Delivers in 20 days",category:"Sunflowers",img:"Sunflower Keychain mini.jpg",desc:"A bright, single-stem plush sunflower keychain with a rich brown center and green leaves. Carries pocket-sized sunshine wherever you go, perfect for clipping onto purses or keys."},
+  {id:18,name:"Lotus Bouquet",price:699,delivery:"Delivers in 20 days",category:"Roses",img:"lotus bouquet.jpeg",desc:"A traditional bouquet of plush pink lotuses and green leaves wrapped in vintage-style script paper. Combines timeless cultural elegance with a soft, modern handmade feel."},
+];
+const defaultReviews = [
+  {id:1,name:"Anshika S.",rating:4.5,comment:"I love this product! It's exactly what I was looking for."},
+  {id:2,name:"Bhoomika",rating:4,comment:"Great quality and fast delivery. Highly recommended."},
+  {id:3,name:"Shreyash",rating:5,comment:"Outstanding product and excellent customer service."},
+];
+const fixedDescriptions = Object.fromEntries(defaultProducts.map(product => [product.id, product.desc]));
+
+let state = {
+  products: JSON.parse(localStorage.getItem(LS.products) || 'null') || defaultProducts,
+  reviews: JSON.parse(localStorage.getItem(LS.reviews) || 'null') || defaultReviews,
+  quotes: JSON.parse(localStorage.getItem(LS.quotes) || 'null') || defaultQuotes,
+  hero: JSON.parse(localStorage.getItem(LS.hero) || 'null') || defaultHero,
+  queries: JSON.parse(localStorage.getItem(LS.queries) || 'null') || [],
+  admin: localStorage.getItem(LS.admin) === '1',
+  canEditCatalog: false,
+  filter: 'All',
+  cart: JSON.parse(localStorage.getItem('fiora_cart')||'[]'),
+  editingId: null,
+  tempImg: null
+};
+if(!state.products.length) state.products=defaultProducts;
+if(!state.reviews.length) state.reviews=defaultReviews;
+state.products.forEach(product => {
+  if(fixedDescriptions[product.id]) product.desc = fixedDescriptions[product.id];
+});
+
+function save(k){ localStorage.setItem(k, JSON.stringify(state[k.replace('fiora_','').replace('_v2','')])); if(k===LS.products || k===LS.reviews || k===LS.quotes || k===LS.hero || k===LS.queries){} }
+function persist(){ localStorage.setItem(LS.products, JSON.stringify(state.products)); localStorage.setItem(LS.reviews, JSON.stringify(state.reviews)); localStorage.setItem(LS.quotes, JSON.stringify(state.quotes)); localStorage.setItem(LS.hero, JSON.stringify(state.hero)); localStorage.setItem(LS.queries, JSON.stringify(state.queries)); localStorage.setItem('fiora_cart', JSON.stringify(state.cart)); }
+
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
+
+function renderMarquee(){
+  const track=document.getElementById('marqueeTrack');
+  const arr=[...state.quotes,...state.quotes];
+  track.innerHTML = arr.map(q=>`<span>${q}</span>`).join('') + arr.map(q=>`<span>${q}</span>`).join('');
+}
+function renderHero(){
+  document.getElementById('heroTitle').textContent = state.hero.title;
+  document.getElementById('heroSub').textContent = state.hero.sub;
+  document.getElementById('editHeroTitle').value = state.hero.title;
+  document.getElementById('editHeroSub').value = state.hero.sub;
+  document.getElementById('editQuotes').value = state.quotes.join(', ');
+  if(state.admin){ document.getElementById('heroTitle').classList.add('editable'); document.getElementById('heroSub').classList.add('editable'); document.getElementById('heroEditHint').textContent='Admin: click quote to edit below'; } else { document.getElementById('heroTitle').classList.remove('editable'); document.getElementById('heroSub').classList.remove('editable'); document.getElementById('heroEditHint').textContent=''; }
+}
+function renderFilters(){
+  const cats=['All','Roses','Sunflowers','Lilies','Lotus','Tulips','Others'];
+  const f=document.getElementById('filters'); f.innerHTML='';
+  cats.forEach(c=>{ const b=document.createElement('button'); b.className='chip'+(state.filter===c?' active':''); b.textContent=c; b.onclick=()=>{state.filter=c; renderShop(); renderFilters();}; f.appendChild(b); });
+}
+function renderShop(){
+  const grid=document.getElementById('shopGrid'); grid.innerHTML='';
+  if(state.canEditCatalog){
+    const add=document.createElement('div'); add.className='card add-card'; add.innerHTML='<div><span class="plus">+</span><b>Add New Bouquet</b><div class="small add-card-note">Image, price & delivery time required</div></div>'; add.onclick=()=>openEdit(null); grid.appendChild(add);
+  }
+  let list=state.products; if(state.filter!=='All') list=list.filter(p=>p.category===state.filter);
+  list.forEach(p=>{
+    const el=document.createElement('div'); el.className='card'; el.innerHTML=`
+      <div class="card-actions${state.canEditCatalog?' admin-visible':''}">${state.canEditCatalog?`<button class="mini-btn" data-edit="${p.id}">✎</button><button class="mini-btn" data-del="${p.id}">🗑</button>`:''}</div>
+      <img src="${p.img}" loading="lazy" alt="${p.name}" />
+      <div class="card-body">
+        <div class="card-top"><span class="badge">${p.delivery}</span><span class="price">Rs. ${p.price}</span></div>
+        <h3 class="serif">${p.name}</h3>
+        <div class="meta">Fixed Price - No Bargaining • ${p.category}</div>
+      </div>`;
+    el.addEventListener('click', (e)=>{ if(e.target.closest('[data-edit]')||e.target.closest('[data-del]')) return; openProduct(p.id); });
+    if(state.canEditCatalog){
+      el.querySelectorAll('[data-edit]').forEach(b=>b.onclick=(ev)=>{ev.stopPropagation();openEdit(p.id);});
+      el.querySelectorAll('[data-del]').forEach(b=>b.onclick=(ev)=>{ev.stopPropagation(); if(confirm('Delete '+p.name+'?')){ state.products=state.products.filter(x=>x.id!==p.id); persist(); renderShop(); toast('Deleted'); }});
+    }
+    grid.appendChild(el);
+  });
+}
+function renderReviews(){
+  const m=document.getElementById('reviewsMasonry'); m.innerHTML='';
+  state.reviews.forEach(r=>{
+    const d=document.createElement('div'); d.className='polaroid';
+    const image=r.img?`<img src="${r.img}" loading="lazy" alt="Review from ${r.name||'Bloom fam'}" />`:'';
+    const rating=r.rating?`<div class="small">${'★'.repeat(Math.round(r.rating))}</div>`:'';
+    const comment=r.comment?`<p class="small">${r.comment}</p>`:'';
+    d.innerHTML=`<div class="tape"></div>${image}<div class="review-meta"><b class="review-name">${r.name||'Bloom fam'}</b>${state.canEditCatalog?`<button data-rdel="${r.id}" class="mini-btn review-delete">✕</button>`:''}</div>${rating}${comment}`;
+    if(state.canEditCatalog){ const btn=d.querySelector('[data-rdel]'); if(btn) btn.onclick=()=>{ state.reviews=state.reviews.filter(x=>x.id!==r.id); persist(); renderReviews(); }; }
+    m.appendChild(d);
+  });
+}
+function renderQueries(){
+  const list=document.getElementById('queriesList'); if(!list) return; list.innerHTML='';
+  if(state.queries.length===0) list.innerHTML='<div class="small">No queries yet</div>';
+  state.queries.slice().reverse().forEach(q=>{
+    const div=document.createElement('div'); div.className='query-item'; div.innerHTML=`<b>${q.name}</b> • ${q.whatsapp} • ${q.occasion}<br>${q.message}<br><span class="query-date">${new Date(q.at).toLocaleString()}</span>`;
+    list.appendChild(div);
+  });
+}
+function renderCart(){
+  document.getElementById('cartCount').textContent=state.cart.length;
+  const items=document.getElementById('cartItems'); items.innerHTML='';
+  let total=0; state.cart.forEach((c,i)=>{
+    total+=c.price;
+    const d=document.createElement('div'); d.className='cart-item';
+    d.innerHTML=`<img src="${c.img}" class="cart-item-image" alt="${c.name}"/><div class="cart-item-details"><div class="cart-item-name">${c.name}</div><div class="cart-item-price">Rs. ${c.price}</div></div><button data-rm="${i}" class="mini-btn">✕</button>`;
+    d.querySelector('[data-rm]').onclick=()=>{ state.cart.splice(i,1); persist(); renderCart(); };
+    items.appendChild(d);
+  });
+  document.getElementById('cartTotal').textContent='Rs. '+total;
+  const waText = state.cart.length? encodeURIComponent(`Hi Fiora! I want to order:\n`+state.cart.map(c=>`- ${c.name} Rs.${c.price}`).join('\n')+`\nTotal Rs.${total}\nDelivery: please confirm`):'';
+  document.getElementById('cartWa').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`;
+}
+function openProduct(id){
+  const p=state.products.find(x=>x.id===id); if(!p) return;
+  document.getElementById('mImg').src=p.img; document.getElementById('mName').textContent=p.name; document.getElementById('mPrice').textContent=`Rs. ${p.price}`; document.getElementById('mBadge').textContent=p.delivery; document.getElementById('mDesc').textContent=p.desc;
+  document.getElementById('mWa').href=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi Fiora! I want to order ${p.name} (Rs.${p.price}) - ${p.delivery}. Please confirm.`)}`;
+  document.getElementById('mCart').onclick=()=>{ state.cart.push(p); persist(); renderCart(); toast('Added to cart'); };
+  document.getElementById('productModal').classList.add('open');
+}
+function openEdit(id){
+  if(!state.canEditCatalog) return;
+  state.editingId=id; state.tempImg=null; document.getElementById('fPreview').style.display='none'; document.getElementById('formError').style.display='none';
+  if(id){ const p=state.products.find(x=>x.id===id); document.getElementById('fName').value=p.name; document.getElementById('fPrice').value=p.price; document.getElementById('fDelivery').value=p.delivery; document.getElementById('fCategory').value=p.category; document.getElementById('fDesc').value=p.desc; document.getElementById('fPreview').src=p.img; document.getElementById('fPreview').style.display='block'; state.tempImg=p.img; } else { document.getElementById('fName').value=''; document.getElementById('fPrice').value=''; document.getElementById('fDelivery').value=''; document.getElementById('fCategory').value='Roses'; document.getElementById('fDesc').value=''; document.getElementById('fImg').value=''; }
+  document.getElementById('editModal').classList.add('open');
+}
+function handleImage(input, previewId, cb){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader(); reader.onload=e=>{ if(previewId){ const preview=document.getElementById(previewId); preview.src=e.target.result; preview.style.display='block'; } cb(e.target.result); }; reader.readAsDataURL(file);
+}
+
+document.getElementById('fImg').addEventListener('change', e=> handleImage(e.target,'fPreview', v=> state.tempImg=v));
+document.getElementById('rImg').addEventListener('change', e=> handleImage(e.target,null, v=> window._rtemp=v));
+
+document.getElementById('saveProduct').onclick=()=>{
+  if(!state.canEditCatalog) return;
+  const name=document.getElementById('fName').value.trim(); const price=parseInt(document.getElementById('fPrice').value); const delivery=document.getElementById('fDelivery').value.trim(); const cat=document.getElementById('fCategory').value;
+  const err=document.getElementById('formError');
+  if(!name||!price||!delivery){ err.textContent='Name, Price and Delivery Time are mandatory.'; err.style.display='block'; return; }
+  if(!state.tempImg){ err.textContent='Please upload an image.'; err.style.display='block'; return; }
+  if(state.editingId){ const p=state.products.find(x=>x.id===state.editingId); Object.assign(p,{name,price,delivery,category:cat,img:state.tempImg}); } else { state.products.unshift({id:Date.now(),name,price,delivery,category:cat,img:state.tempImg,desc:''}); }
+  persist(); renderShop(); document.getElementById('editModal').classList.remove('open'); toast('Bouquet saved');
+};
+
+document.getElementById('saveReview').onclick=()=>{
+  if(!state.canEditCatalog) return;
+  if(!window._rtemp){ toast('Upload image first'); return; }
+  const name=document.getElementById('rName').value.trim()||'Bloom fam';
+  state.reviews.unshift({id:Date.now(),name,img:window._rtemp}); persist(); renderReviews(); document.getElementById('reviewModal').classList.remove('open'); window._rtemp=null; document.getElementById('rImg').value=''; toast('Review added');
+};
+
+document.getElementById('queryForm').addEventListener('submit', e=>{
+  e.preventDefault(); const fd=new FormData(e.target); const obj={name:fd.get('name'),whatsapp:fd.get('whatsapp'),occasion:fd.get('occasion'),message:fd.get('message'),at:Date.now()}; state.queries.push(obj); persist(); renderQueries(); toast('Query sent! We will WhatsApp you soon.'); e.target.reset();
+});
+
+document.getElementById('saveQuotesBtn').onclick=()=>{
+  state.hero.title=document.getElementById('editHeroTitle').value.trim()||defaultHero.title;
+  state.hero.sub=document.getElementById('editHeroSub').value.trim()||defaultHero.sub;
+  const q=document.getElementById('editQuotes').value.split(',').map(s=>s.trim()).filter(Boolean);
+  if(q.length) state.quotes=q;
+  persist(); renderHero(); renderMarquee(); toast('Saved');
+};
+
+// admin toggle
+function setAdmin(on){
+  state.admin=on; localStorage.setItem(LS.admin, on?'1':'0');
+  document.getElementById('adminBanner').classList.toggle('on',on);
+  document.getElementById('adminSwitch').classList.toggle('on',on);
+  document.getElementById('addReviewBtn').style.display=state.canEditCatalog&&on?'inline-flex':'none';
+  document.getElementById('adminQueries').style.display=on?'block':'none';
+  document.getElementById('adminQuotes').style.display=on?'block':'none';
+  renderShop(); renderReviews(); renderHero();
+}
+document.getElementById('adminSwitch').onclick=()=>{
+  if(!state.admin){ document.getElementById('pinModal').classList.add('open'); } else { setAdmin(false); }
+};
+document.getElementById('pinSubmit').onclick=()=>{
+  const v=document.getElementById('pinInput').value.trim();
+  if(v==='7448'){ document.getElementById('pinModal').classList.remove('open'); document.getElementById('pinInput').value=''; document.getElementById('pinError').style.display='none'; setAdmin(true); toast('Admin mode ON'); } else { document.getElementById('pinError').style.display='block'; }
+};
+document.getElementById('addReviewBtn').onclick=()=>document.getElementById('reviewModal').classList.add('open');
+document.getElementById('cartBtn').onclick=()=>document.getElementById('cartDrawer').classList.add('open');
+document.getElementById('hamburger').onclick=()=>document.getElementById('navLinks').classList.toggle('mobile-open');
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.close).classList.remove('open')));
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('open'); }));
+
+// wa links
+function setWaLinks(){ const link=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi Fiora! I want to order / customize my bouquet!! —')}`; document.getElementById('waLink').href=link; const footerLink=document.getElementById('footerWa'); if(footerLink) footerLink.href=link; }
+document.getElementById('year').textContent=new Date().getFullYear();
+
+// init
+setWaLinks(); renderMarquee(); renderHero(); renderFilters(); renderShop(); renderReviews(); renderQueries(); renderCart(); setAdmin(state.admin);
+</script>
+</body>
+</html>
